@@ -8,6 +8,9 @@
 
 <div class="container">
     <div class="row text-center">
+        <div class="col-20 mb-5">
+        <a class="btn btn-outline-primary" href="{% url 'catalog:create_product' %}">Добавить новый продукт</a>
+        </div>
         {% for object in object_list %}
         <div class="col-3">
             <div class="card mb-4 box-shadow">
@@ -21,6 +24,10 @@
 
                     </ul>
                     <a type="button" class="btn btn-lg btn-block btn-outline-primary" href="{% url 'catalog:product' object.pk %}">Открыть</a>
+                    <a type="button" class="btn btn-lg btn-block btn-outline-primary" href="{% url 'catalog:edit_product' object.pk %}">Изменить</a>
+                </div>
+                <div class="card-future">
+                    virsion:{{object.active_version_number}}
                 </div>
             </div>
         </div>
