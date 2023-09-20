@@ -9,7 +9,9 @@
 <div class="container">
     <div class="row text-center">
         <div class="col-20 mb-5">
+            {% if user.is_authenticated %}
         <a class="btn btn-outline-primary" href="{% url 'catalog:create_product' %}">Добавить новый продукт</a>
+            {% endif %}
         </div>
         {% for object in object_list %}
         <div class="col-3">
@@ -24,10 +26,13 @@
 
                     </ul>
                     <a type="button" class="btn btn-lg btn-block btn-outline-primary" href="{% url 'catalog:product' object.pk %}">Открыть</a>
+                    {% if user.is_authenticated %}
                     <a type="button" class="btn btn-lg btn-block btn-outline-primary" href="{% url 'catalog:edit_product' object.pk %}">Изменить</a>
+                    {% endif %}
                 </div>
                 <div class="card-future">
-                    virsion:{{object.active_version_number}}
+                    virsion:{{object.active_version_number}}//
+                    <spanc class="text-muted">{{ object.owner|default:"Автор не указан" }}</spanc>
                 </div>
             </div>
         </div>

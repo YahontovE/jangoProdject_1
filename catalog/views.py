@@ -31,7 +31,6 @@ class ProductListView(ListView):
         return context
 
 
-
 def contact_info(request):
     context = {
         'title': 'Контакты'
@@ -45,6 +44,7 @@ class ProductDetailView(DetailView):
         'title': 'семейный магазин',
     }
     template_name = 'catalog/product.html'
+
 
 class ProductUpdateView(UpdateView):
     model = Product
@@ -73,6 +73,7 @@ class ProductUpdateView(UpdateView):
             formset.save()
         return super().form_valid(form)
 
+
 class ProductCreateView(CreateView):
     model = Product
     form_class = ProductForm
@@ -94,6 +95,8 @@ class ProductCreateView(CreateView):
         context_data = self.get_context_data()
         formset = context_data['formset']
         self.object = form.save()
+        self.object.owner = self.request.user
+        self.object.save()
 
         if formset.is_valid():
             formset.instance = self.object
@@ -117,7 +120,8 @@ class BlogCreateView(CreateView):
 class BlogUpdateView(UpdateView):
     model = Blog
     fields = ('header', 'content',)
-    #success_url = reverse_lazy('catalog:list')
+
+    # success_url = reverse_lazy('catalog:list')
 
     def form_valid(self, form):
         if form.is_valid():
@@ -127,7 +131,7 @@ class BlogUpdateView(UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('catalog:detail',args=[self.kwargs.get('pk')])
+        return reverse('catalog:detail', args=[self.kwargs.get('pk')])
 
 
 class BlogListView(ListView):
